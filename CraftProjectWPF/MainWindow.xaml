@@ -13,8 +13,9 @@
         </Grid.ColumnDefinitions>
         <TextBlock x:Name="Information" HorizontalAlignment="Left" Margin="10,57,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Grid.Column="1" Height="294" Width="272"/>
         <TextBox x:Name="Input" HorizontalAlignment="Center" Margin="0,389,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.Column="1"/>
-        <Button x:Name="btn_Submit" Content="Submit" HorizontalAlignment="Left" Margin="519,389,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.05,0.058" Grid.Column="1"/>
+        <Button x:Name="btn_Submit" Content="Submit" HorizontalAlignment="Left" Margin="519,389,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.05,0.058" Grid.Column="1" Click="btn_Submit_Click"/>
         <TextBlock x:Name="Inventory" Grid.Column="1" HorizontalAlignment="Left" Margin="519,57,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="294" Width="202"/>
+        <TextBlock x:Name="Message" Grid.Column="1" HorizontalAlignment="Left" Margin="121,389,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Width="173"/>
 
     </Grid>
 </Window>

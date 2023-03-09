@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace CraftProjectWPF
 {
-    class Player
+    class Player : Person
     {
+        public Cookbook cookbook = new Cookbook();
         public List<Item> Inventory = new List<Item>()
         {
             new Item(){Name = "Water", Description = "Clean water", Quantity = 0.50, Price = 1.00},
@@ -50,6 +51,39 @@ namespace CraftProjectWPF
             }
             return 0;
         }
+
+        public bool ChangeItemAmount(string name, double amount)
+        {
+            foreach (var item in Inventory)
+            {
+                // name.ToLower() is passed through the method
+                if (item.Name.ToLower() == name.ToLower())
+                {
+                    item.Quantity += amount;
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public string ChooseRecipe()
+        {
+            //call list of recipes
+            string output = "";
+            foreach (var item in cookbook.Recipes)
+            {
+                output += item.Name + Environment.NewLine;
+                foreach(var ingredient in item.Ingredients)
+                {
+                    output += "    " + ingredient.Name + Environment.NewLine;
+                }
+            }
+            return output;
+        }
+
+        
+
+
 
     }
 }

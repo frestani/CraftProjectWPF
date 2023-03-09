@@ -20,7 +20,6 @@ namespace CraftProjectWPF
     /// </summary>
     public partial class MainWindow : Window
     {
-        Cookbook cookbook = new Cookbook();
         Player player = new Player();
         public MainWindow()
         {
@@ -30,13 +29,45 @@ namespace CraftProjectWPF
         private void Grid_Loaded(object sender, RoutedEventArgs e)
         {
             Inventory.Text = player.GetAllItemsFromInventory();
+            Information.Text = player.ChooseRecipe();
+            //Message.Text = 
         }
 
         private void CraftRecipe(Recipe recipe)
         {
-            bool CanCraft = true;
+            if (CheckIngredients(recipe))
+            {
+                //2) if all items and right amount are there, subtract amount needed by recipe from player's inventory
+                foreach (Item item in recipe.Ingredients)
+                {
+                    //item is in inventory
+                    //distill down into if true or if false
+                    player.ChangeItemAmount(item.Name, -item.Quantity);
+                    
+                    //3) create a new item of the thing the recipe is supposed to make, then add that to player's inventory
+                    //4) let player know it was successful
+                    //Message.Text = "You have all of the ingredients!";
+
+                }
+                if (player.SearchInventoryForItem(recipe.Name))
+                {
+                    player.ChangeItemAmount(recipe.Name, recipe.yieldAmount);
+                 }
+                else
+                {
+                    player.Inventory.Add(new Item() { Name = recipe.Name, Quantity = recipe.yieldAmount, Description = recipe.Description, Price = recipe.Price });
+                }
+            }
             //let player pick recipe (has to happen elsewhere)
-            //1) for each ingredient in the recipe, search player inventory and see if they have the item
+            
+
+            //rest can only happen if CanCraft = true
+
+        }
+
+        private bool CheckIngredients(Recipe recipe)
+        {
+            //for each ingredient in the recipe, search player inventory and see if they have the item
             // check if they have the right amount
             foreach (Item item in recipe.Ingredients)
             {
@@ -48,22 +79,26 @@ namespace CraftProjectWPF
                     if (amount >= item.Quantity)
                     {
                         //they have the right amount, equal or greater
+                        Message.Text = "You have the correct amount of ingredients!";
                     }
                     else
                     {
                         //they don't have enough
-                        CanCraft = false;
+                        Message.Text = "You do not have enough ingredients.";
+                        return false;
                     }
                 }
                 else
                 {
-                    CanCraft = false;
+                    return false;
                 }
             }
-            //rest can only happen if CanCraft = true
-            //2) if all items and right amount are there, subtract amount needed by recipe from player's inventory
-            //3) create a new item of the thing the recipe is supposed to make, then add that to player's inventory
-            //4) let player know it was successful
+            return true;
+        }
+
+        private void btn_Submit_Click(object sender, RoutedEventArgs e)
+        {
+            //LET PLAYER CHOOSE RECIPE!!!
         }
     }
 }
