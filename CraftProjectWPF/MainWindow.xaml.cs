@@ -99,6 +99,12 @@ namespace CraftProjectWPF
         private void btn_Submit_Click(object sender, RoutedEventArgs e)
         {
             //LET PLAYER CHOOSE RECIPE!!!
+            string playerChoice = Input.Text;
+            int recipeIndex = -1;
+            try
+            {
+                recipeIndex += Int32.Parse(Input.Text);
+            }
         }
     }
 }

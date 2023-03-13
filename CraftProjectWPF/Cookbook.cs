@@ -28,6 +28,6 @@ namespace CraftProjectWPF
             yieldAmount = 1
             }
         };
-
+        
     }
 }
