@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.IO;
+using System.Xml;
 
 namespace CraftProjectWPF
 {
@@ -21,6 +23,7 @@ namespace CraftProjectWPF
     public partial class MainWindow : Window
     {
         Player player = new Player();
+        List<Recipe> Recipes = new List<Recipe>();
         public MainWindow()
         {
             InitializeComponent();
@@ -29,8 +32,70 @@ namespace CraftProjectWPF
         private void Grid_Loaded(object sender, RoutedEventArgs e)
         {
             Inventory.Text = player.GetAllItemsFromInventory();
-            Information.Text = player.ChooseRecipe();
-            //Message.Text = 
+            Recipes = LoadRecipes("../../../data/recipes.xml");
+            Information.Text = GetRecipeListInformation();
+        }
+
+        //credit to PROG 201 class code
+        private List<Recipe> LoadRecipes(string fileName)
+        {
+            List<Recipe> Recipes = new List<Recipe>();
+            XmlDocument doc = new XmlDocument();
+            doc.Load(fileName);
+            XmlNode root = doc.DocumentElement;
+            XmlNodeList recipeList = root.SelectNodes("/recipes/recipe");
+            XmlNodeList ingredientsList;
+
+            foreach (XmlElement recipe in recipeList)
+            {
+                Recipe recipeToAdd = new Recipe();
+                recipeToAdd.Name = recipe.GetAttribute("title");
+                recipeToAdd.Description = recipe.GetAttribute("description");
+                string yieldAmount = recipe.GetAttribute("yieldAmount");
+                if (float.TryParse(yieldAmount, out float amount))
+                { recipeToAdd.YieldAmount = amount; }
+
+                recipeToAdd.YieldType = recipe.GetAttribute("yieldType");
+                string recipevalue = recipe.GetAttribute("value");
+                if (float.TryParse(recipevalue, out float value))
+                { recipeToAdd.Value = value; }
+
+                ingredientsList = recipe.ChildNodes; //for ingredients
+
+                foreach (XmlElement i in ingredientsList)
+                {
+                    string ingredientName = i.GetAttribute("itemName");
+                    string ingredientAmountString = i.GetAttribute("amount");
+                    float ingredientAmount = 0;
+                    if (float.TryParse(ingredientAmountString, out float e))
+                    { ingredientAmount = e; }
+                    string ingredientAmountType = i.GetAttribute("amountType");
+                    string tempIngredientValue = i.GetAttribute("value");
+                    float ingredientValue = 0;
+                    if (float.TryParse(tempIngredientValue, out float ingValue))
+                    { ingredientValue = ingValue; }
+
+                    recipeToAdd.Ingredients.Add(new Item() { Name = ingredientName, Amount = ingredientAmount, AmountType = ingredientAmountType, Value = ingredientValue });
+                }
+                Recipes.Add(recipeToAdd);
+            }
+            return Recipes;
+        }
+
+        //credit to PROG 201 class code
+        private string GetRecipeListInformation()
+        {
+            string output = "Recipes:\n";
+            foreach (Recipe recipe in Recipes)
+            {
+                output += $"{recipe.Name}\n";
+                foreach (var ingredient in recipe.Ingredients)
+                {
+                    output += "    " + ingredient.Name + Environment.NewLine;
+                }
+            }
+
+            return output;
         }
 
         private void CraftRecipe(Recipe recipe)
@@ -98,13 +163,13 @@ namespace CraftProjectWPF
 
         private void btn_Submit_Click(object sender, RoutedEventArgs e)
         {
-            //LET PLAYER CHOOSE RECIPE!!!
-            string playerChoice = Input.Text;
-            int recipeIndex = -1;
-            try
-            {
-                recipeIndex += Int32.Parse(Input.Text);
-            }
+        //    //LET PLAYER CHOOSE RECIPE!!!
+        //    string playerChoice = Input.Text;
+        //    int recipeIndex = -1;
+        //    try
+        //    {
+        //        recipeIndex += Int32.Parse(Input.Text);
+        //    }
         }
     }
 }

@@ -1,0 +1,13 @@
+<recipes>
+	<recipe title = "Chocolate Cake" description = "Makes 1 cake" yieldAmount = "1" yieldType = "plate" value = "10">
+		<ingredient itemName = "Powdered sugar icing" amount = "1" amountType = "cups(s)"/>
+		<ingredient itemName = "Banana" amount = "2" amountType = "(whole)"/>
+		<ingredient itemName = "Egg" amount = "2" amountType = "(cracked)"/>
+		<ingredient itemName = "Cacao powder" amount = "2" amountType = "tbsp"/>
+	</recipe>
+	<recipe title = "Powdered Sugar Icing" description = "Makes icing" yieldAmount = "1" yieldType = "bowl" value = "3">
+		<ingredient itemName = "Powdered sugar" amount = "1" amountType = "cup(s)"/>
+		<ingredient itemName = "Vanilla extract" amount = "0.5" amountType = "tbsp"/>
+		<ingredient itemName = "Milk" amount = "2" amountType = "cup(s)"/>
+	</recipe>
+</recipes>
