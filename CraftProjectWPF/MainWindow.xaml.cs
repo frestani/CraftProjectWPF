@@ -34,6 +34,7 @@ namespace CraftProjectWPF
             Inventory.Text = player.GetAllItemsFromInventory();
             Recipes = LoadRecipes("../../../data/recipes.xml");
             Information.Text = GetRecipeListInformation();
+            Message.Text = "Enter the number of the recipe you want to craft: ";
         }
 
         //credit to PROG 201 class code
@@ -86,13 +87,15 @@ namespace CraftProjectWPF
         private string GetRecipeListInformation()
         {
             string output = "Recipes:\n";
+            int i = 0;
             foreach (Recipe recipe in Recipes)
             {
-                output += $"{recipe.Name}\n";
+                output += $"{i + 1} {recipe.Name}\n";
                 foreach (var ingredient in recipe.Ingredients)
                 {
                     output += "    " + ingredient.Name + Environment.NewLine;
                 }
+                i++;
             }
 
             return output;
@@ -163,13 +166,19 @@ namespace CraftProjectWPF
 
         private void btn_Submit_Click(object sender, RoutedEventArgs e)
         {
-        //    //LET PLAYER CHOOSE RECIPE!!!
-        //    string playerChoice = Input.Text;
-        //    int recipeIndex = -1;
-        //    try
-        //    {
-        //        recipeIndex += Int32.Parse(Input.Text);
-        //    }
+            //    //LET PLAYER CHOOSE RECIPE!!!
+            string playerChoice = Input.Text;
+            int recipeIndex = -1;
+            try
+            {
+                recipeIndex += Int32.Parse(Input.Text);
+                CraftRecipe(Recipes[recipeIndex-1]);
+                Inventory.Text = player.GetAllItemsFromInventory();
+            }
+            catch
+            {
+
+            }
         }
     }
 }
