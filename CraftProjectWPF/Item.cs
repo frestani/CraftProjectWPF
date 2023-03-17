@@ -16,8 +16,7 @@ namespace CraftProjectWPF
 
         //credit to PROG 201 class code
         public string Name;
-        public double Amount = 0;
+        //public double Amount = 0;
         public string AmountType = "cup(s)";
-        public float Value = 0;
     }
 }

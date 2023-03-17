@@ -20,8 +20,10 @@
         <Button x:Name="btn_Submit" Content="Submit" HorizontalAlignment="Left" Margin="519,309,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.05,0.058" Grid.Column="1" Click="btn_Submit_Click" Grid.Row="1"/>
         <TextBlock x:Name="Inventory" Grid.Column="1" HorizontalAlignment="Left" Margin="519,57,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="294" Width="202" Grid.RowSpan="2"/>
         <TextBlock x:Name="Message" Grid.Column="1" HorizontalAlignment="Left" Margin="121,309,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Width="173" Grid.Row="1"/>
-        <Button x:Name="btn_Craft" Grid.Column="1" Content="Craft" HorizontalAlignment="Left" Margin="10,33,0,0" VerticalAlignment="Top" Height="37" Width="54"/>
-        <Button x:Name="btn_Trade" Grid.Column="1" Content="Trade" HorizontalAlignment="Left" Margin="92,33,0,0" VerticalAlignment="Top" Height="37" Width="54"/>
+        <Button x:Name="btn_Craft" Grid.Column="1" Content="Craft" HorizontalAlignment="Left" Margin="10,33,0,0" VerticalAlignment="Top" Height="37" Width="54" Click="btn_Craft_Click"/>
+        <Button x:Name="btn_Buy" Grid.Column="1" Content="Buy" HorizontalAlignment="Left" Margin="92,33,0,0" VerticalAlignment="Top" Height="37" Width="54" Click="btn_Buy_Click"/>
+        <TextBlock x:Name="Mode" Grid.Column="1" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Craft Mode" VerticalAlignment="Top"/>
+        <Button x:Name="btn_Sell" Grid.Column="1" Content="Sell" HorizontalAlignment="Left" Margin="180,34,0,0" VerticalAlignment="Top" Height="37" Width="54" Click="btn_Sell_Click"/>
 
     </Grid>
 </Window>

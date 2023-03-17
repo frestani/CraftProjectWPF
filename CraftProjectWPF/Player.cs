@@ -9,67 +9,18 @@ namespace CraftProjectWPF
     class Player : Person
     {
         public Cookbook cookbook = new Cookbook();
-        public List<Item> Inventory = new List<Item>()
+        //contrsuctor - no return type
+        public Player()
+        {
+            Inventory = new List<Item>()
         {
             new Item(){Name = "Water", Description = "Clean water", Quantity = 0.50, Price = 1.00},
-            new Item(){Name = "Water", Description = "Clean water", Quantity = 0.50, Price = 1.00},
-            new Item(){Name = "Water", Description = "Clean water", Quantity = 0.50, Price = 1.00},
-            new Item(){Name = "Water", Description = "Clean water", Quantity = 0.50, Price = 1.00}
+            new Item(){Name = "Milk", Description = "Dairy product", Quantity = 2, Price = 3.00},
+            new Item(){Name = "Vanilla extract", Description = "Concentrated vanilla", Quantity = 1, Price = 4.00},
+            new Item(){Name = "Powdered sugar", Description = "A fine, fluffy form of sugar", Quantity = 2, Price = 5.00}
         };
-        public string GetAllItemsFromInventory()
-        {
-            string output = "";
-            //foreach (var item in Inventory)
-            //{
-            //    output += item.Name + Environment.NewLine;
-            //}
-            //return output; 
-            for (int i = 0; i < Inventory.Count; i++)
-            {
-                output += $"{i + 1} {Inventory[i].Name} \n";
-            }
-            return output;
         }
-
-        public bool SearchInventoryForItem(string name)
-        {
-            foreach (var item in Inventory)
-            {
-                // name.ToLower() is passed through th method
-                if (item.Name.ToLower() == name.ToLower())
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        public double SearchInventoryForAmount(string name)
-        {
-            foreach (var item in Inventory)
-            {
-                // name.ToLower() is passed through the method
-                if (item.Name.ToLower() == name.ToLower())
-                {
-                    return item.Quantity;
-                }
-            }
-            return 0;
-        }
-
-        public bool ChangeItemAmount(string name, double amount)
-        {
-            foreach (var item in Inventory)
-            {
-                // name.ToLower() is passed through the method
-                if (item.Name.ToLower() == name.ToLower())
-                {
-                    item.Quantity += amount;
-                    return true;
-                }
-            }
-            return false;
-        }
+        
 
         public string ChooseRecipe()
         {

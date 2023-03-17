@@ -1,0 +1,9 @@
+<shopItems>
+	<shopItem itemName = "Powdered sugar icing" amount ="20" cost = "1.00"/>
+	<shopItem itemName = "Banana" amount ="20" cost = "1.00"/>
+	<shopItem itemName = "Egg" amount ="20" cost = "1.00"/>
+	<shopItem itemName = "Cacao powder" amount = "20" cost = "1.00"/>
+	<shopItem itemName = "Powdered sugar" amount ="5" cost = "1.00"/>
+	<shopItem itemName = "Vanilla extract" amount ="10" cost = "1.00"/>
+	<shopItem itemName = "Milk" amount ="10" cost = "1.00"/>
+</shopItems>
