@@ -46,6 +46,8 @@ namespace CraftProjectWPF
             Recipes = LoadRecipes("../../../data/recipes.xml");
             Information.Text = GetRecipeListInformation();
             Message.Text = "Enter the number of the recipe you want to craft: ";
+            PlayerCurrency.Text = $"{player.Currency}";
+            VendorCurrency.Text = $"{vendor.Currency}";
         }
 
         //credit to PROG 201 class code
@@ -228,7 +230,7 @@ namespace CraftProjectWPF
                     BuySubmit();
                     break;
                 case ApplicationMode.Sell:
-                    
+                    SellSubmit();
                     break;
             }
            
@@ -254,7 +256,29 @@ namespace CraftProjectWPF
 
         public void BuySubmit()
         {
+            string playerChoice = Input.Text;
+            int itemIndex = -1;
+            int amount = 1;
+            itemIndex += Int32.Parse(Input.Text);
+            if (player.Currency < vendor.Inventory[itemIndex].Price)
+            {
+                //print message saying player doesn't have enough money
+            }
+            if (vendor.SearchInventoryForAmount(vendor.Inventory[itemIndex].Name) >= amount)
+            {
+                vendor.Inventory[itemIndex].Quantity -= amount;
+                player.Inventory.Add(vendor.Inventory[itemIndex]);
+                player.Currency -= vendor.Inventory[itemIndex].Price;
+                vendor.Currency += vendor.Inventory[itemIndex].Price;
+                PlayerCurrency.Text = $"{player.Currency}";
+                VendorCurrency.Text = $"{vendor.Currency}";
+            }
+            else
+            {
 
+            }
+            Inventory.Text = player.Buy();
+            Information.Text = vendor.Buy();
         }
 
         private void SellSubmit()
@@ -262,27 +286,35 @@ namespace CraftProjectWPF
             string playerChoice = Input.Text;
             int itemIndex = -1;
             int amount = 1;
-            try
+            itemIndex += Int32.Parse(Input.Text);
+            if (vendor.Currency < player.Inventory[itemIndex].Price)
             {
-                itemIndex += Int32.Parse(Input.Text);
+            //print message saying vendor doesn't have enough currency
+            }
                 //find item in inventory, see if they have more than 0
                 //if true, minus 1 from amount
-                if (player.SearchInventoryForAmount(player.Inventory[itemIndex].Name)>=amount)
+            if (player.SearchInventoryForAmount(player.Inventory[itemIndex].Name) >= amount)
                 {
                     //check - is the vendor's currency greater than or equal to the price of that item
                     player.Inventory[itemIndex].Quantity -= amount;
                     //add item to vendor's inventory
-                }
-                
-                //minus from vendor's currency the cost of the item
-                //add cost of item to player's currency
+                    vendor.Inventory.Add(player.Inventory[itemIndex]);
+                    //minus from vendor's currency the cost of the item
+                    vendor.Currency -= player.Inventory[itemIndex].Price;
+                    //add cost of item to player's currency
+                    player.Currency += player.Inventory[itemIndex].Price;
+                PlayerCurrency.Text = $"{player.Currency}";
+                VendorCurrency.Text = $"{vendor.Currency}";
+            }
+                else
+                {
                 //handle if amount of item is 0
-                //handle if vendor doesn't have enough currency
-            }
-            catch
-            {
-
-            }
+                //print message saying player doesn't have enough items
+                Message.Text = "You do have enough items.";
+                    
+                }
+                Information.Text = player.Sell();
+            Inventory.Text = vendor.Sell();
         }
         private void btn_Craft_Click(object sender, RoutedEventArgs e)
         {
@@ -294,7 +326,9 @@ namespace CraftProjectWPF
         {
             mode = ApplicationMode.Buy;
             Mode.Text = "Buy Mode";
-            Information.Text = GetShopItemListInformation();
+            Information.Text = player.Buy();
+            Inventory.Text = vendor.Buy();
+            Message.Text = "Enter the number of the item you want to buy: ";
         }
 
         private void btn_Sell_Click(object sender, RoutedEventArgs e)

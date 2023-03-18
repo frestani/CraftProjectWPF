@@ -9,6 +9,7 @@ namespace CraftProjectWPF
     class Player : Person
     {
         public Cookbook cookbook = new Cookbook();
+
         //contrsuctor - no return type
         public Player()
         {

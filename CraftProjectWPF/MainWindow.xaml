@@ -24,6 +24,8 @@
         <Button x:Name="btn_Buy" Grid.Column="1" Content="Buy" HorizontalAlignment="Left" Margin="92,33,0,0" VerticalAlignment="Top" Height="37" Width="54" Click="btn_Buy_Click"/>
         <TextBlock x:Name="Mode" Grid.Column="1" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Craft Mode" VerticalAlignment="Top"/>
         <Button x:Name="btn_Sell" Grid.Column="1" Content="Sell" HorizontalAlignment="Left" Margin="180,34,0,0" VerticalAlignment="Top" Height="37" Width="54" Click="btn_Sell_Click"/>
+        <TextBlock x:Name="PlayerCurrency" Grid.Column="1" HorizontalAlignment="Left" Margin="10,10,0,0" Grid.Row="1" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
+        <TextBlock x:Name="VendorCurrency" Grid.Column="1" HorizontalAlignment="Left" Margin="690,0,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Center"/>
 
     </Grid>
 </Window>
