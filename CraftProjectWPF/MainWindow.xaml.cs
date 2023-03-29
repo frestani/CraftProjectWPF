@@ -50,6 +50,9 @@ namespace CraftProjectWPF
             VendorCurrency.Text = $"{vendor.Currency.ToString("c")}";
         }
 
+        //credit to Alex Gartner
+        private string ImagePath(string file) => $"/../images/{file}";
+
         //credit to PROG 201 class code
         private List<Recipe> LoadRecipes(string fileName)
         {
@@ -73,7 +76,7 @@ namespace CraftProjectWPF
                 string recipevalue = recipe.GetAttribute("value");
                 if (float.TryParse(recipevalue, out float value))
                 { recipeToAdd.Price = value; }
-                recipeToAdd.LocationPath = recipe.GetAttribute("ImagePath");
+                recipeToAdd.LocationPath = ImagePath(recipe.GetAttribute("imagePath"));
 
                 ingredientsList = recipe.ChildNodes; //for ingredients
 

@@ -1,5 +1,5 @@
 <recipes>
-	<recipe title = "Chocolate Cake" description = "Makes 1 cake" yieldAmount = "1" yieldType = "plate" value = "10.00" ImagePath = "images/chocolate-cake.jpg">
+	<recipe title = "Chocolate Cake" description = "Makes 1 cake" yieldAmount = "1" yieldType = "plate" value = "10.00" imagePath = "chocolate-cake.jpg">
 		<ingredient itemName = "Powdered sugar icing" amount = "1" amountType = "cups(s)"/>
 		<ingredient itemName = "Banana" amount = "2" amountType = "(peeled)"/>
 		<ingredient itemName = "Egg" amount = "2" amountType = "(cracked)"/>

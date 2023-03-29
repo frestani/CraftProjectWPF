@@ -8,6 +8,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="images\chocolate-cake.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="images\chocolate-cake.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="xml\" />
   </ItemGroup>
 

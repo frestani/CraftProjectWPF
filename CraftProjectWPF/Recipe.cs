@@ -31,7 +31,7 @@ namespace CraftProjectWPF
         public BitmapImage ShowBitmapImage()
         {
             RecipeImage.BeginInit();
-            RecipeImage.UriSource = new Uri(LocationPath);
+            RecipeImage.UriSource = new Uri(LocationPath, UriKind.Relative);
             RecipeImage.EndInit();
             return RecipeImage;
         }
