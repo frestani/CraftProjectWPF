@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media.Imaging;
 
 namespace CraftProjectWPF
 {
@@ -22,6 +23,17 @@ namespace CraftProjectWPF
         public string YieldType = "cup(s)";
         public float Value = 0;
 
+        public string LocationPath;
+        public BitmapImage RecipeImage = new BitmapImage();
+
         public List<Item> Ingredients = new List<Item>();
+
+        public BitmapImage ShowBitmapImage()
+        {
+            RecipeImage.BeginInit();
+            RecipeImage.UriSource = new Uri(LocationPath);
+            RecipeImage.EndInit();
+            return RecipeImage;
+        }
     }
 }

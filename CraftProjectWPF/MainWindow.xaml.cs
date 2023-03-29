@@ -23,7 +23,7 @@ namespace CraftProjectWPF
     /// </summary>
     public enum ApplicationMode
     {
-        Craft, Buy, Sell
+        Craft, Buy, Sell, Display
     }
     public partial class MainWindow : Window
     {
@@ -46,8 +46,8 @@ namespace CraftProjectWPF
             Recipes = LoadRecipes("../../../data/recipes.xml");
             Information.Text = GetRecipeListInformation();
             Message.Text = "Enter the number of the recipe you want to craft: ";
-            PlayerCurrency.Text = $"{player.Currency}";
-            VendorCurrency.Text = $"{vendor.Currency}";
+            PlayerCurrency.Text = $"{player.Currency.ToString("c")}";
+            VendorCurrency.Text = $"{vendor.Currency.ToString("c")}";
         }
 
         //credit to PROG 201 class code
@@ -72,7 +72,8 @@ namespace CraftProjectWPF
                 recipeToAdd.YieldType = recipe.GetAttribute("yieldType");
                 string recipevalue = recipe.GetAttribute("value");
                 if (float.TryParse(recipevalue, out float value))
-                { recipeToAdd.Value = value; }
+                { recipeToAdd.Price = value; }
+                recipeToAdd.LocationPath = recipe.GetAttribute("ImagePath");
 
                 ingredientsList = recipe.ChildNodes; //for ingredients
 
@@ -171,12 +172,12 @@ namespace CraftProjectWPF
                 }
                 if (player.SearchInventoryForItem(recipe.Name))
                 {
-                    player.ChangeItemAmount(recipe.Name, recipe.yieldAmount);
+                    player.ChangeItemAmount(recipe.Name, recipe.YieldAmount);
                     return $"An additional {recipe.Name} has been added to your inventory.";
                  }
                 else
                 {
-                    player.Inventory.Add(new Item() { Name = recipe.Name, Quantity = recipe.yieldAmount, Description = recipe.Description, Price = recipe.Price });
+                    player.Inventory.Add(new Item() { Name = recipe.Name, Quantity = recipe.YieldAmount, Description = recipe.Description, Price = recipe.Price });
                     return $"{recipe.Name} has been added to your inventory.";
                 }
             }
@@ -232,6 +233,9 @@ namespace CraftProjectWPF
                 case ApplicationMode.Sell:
                     SellSubmit();
                     break;
+                case ApplicationMode.Display:
+                    DisplaySubmit();
+                    break;
             }
            
         }
@@ -270,8 +274,8 @@ namespace CraftProjectWPF
                 player.Inventory.Add(vendor.Inventory[itemIndex]);
                 player.Currency -= vendor.Inventory[itemIndex].Price;
                 vendor.Currency += vendor.Inventory[itemIndex].Price;
-                PlayerCurrency.Text = $"{player.Currency}";
-                VendorCurrency.Text = $"{vendor.Currency}";
+                PlayerCurrency.Text = $"{player.Currency.ToString("c")}";
+                VendorCurrency.Text = $"{vendor.Currency.ToString("c")}";
             }
             else
             {
@@ -287,24 +291,52 @@ namespace CraftProjectWPF
             int itemIndex = -1;
             int amount = 1;
             itemIndex += Int32.Parse(Input.Text);
-            if (vendor.Currency < player.Inventory[itemIndex].Price)
+
+            //credit to Sebastian Pedersen for profit margin and pricing system
+            Random random = new Random();
+            int itemRarityIndex = random.Next(1, 11);
+            double profitMargin = 0;
+            string rarity = "";
+
+            if (itemRarityIndex <= 7)
+            {
+                profitMargin = 10;
+                rarity = "common";
+            }
+            else if (itemRarityIndex > 7 && itemRarityIndex < 10)
+            {
+                profitMargin = 15;
+                rarity = "uncommon";
+            }
+            else
+            {
+                profitMargin = 20;
+                rarity = "rare";
+            }
+            double percentToAdd = Math.Round((profitMargin / 100) * player.Inventory[itemIndex].Price, 2);
+            double newPrice = player.Inventory[itemIndex].Price + percentToAdd;
+
+            if (vendor.Currency < newPrice)
             {
             //print message saying vendor doesn't have enough currency
             }
                 //find item in inventory, see if they have more than 0
                 //if true, minus 1 from amount
             if (player.SearchInventoryForAmount(player.Inventory[itemIndex].Name) >= amount)
-                {
-                    //check - is the vendor's currency greater than or equal to the price of that item
-                    player.Inventory[itemIndex].Quantity -= amount;
-                    //add item to vendor's inventory
-                    vendor.Inventory.Add(player.Inventory[itemIndex]);
-                    //minus from vendor's currency the cost of the item
-                    vendor.Currency -= player.Inventory[itemIndex].Price;
-                    //add cost of item to player's currency
-                    player.Currency += player.Inventory[itemIndex].Price;
-                PlayerCurrency.Text = $"{player.Currency}";
-                VendorCurrency.Text = $"{vendor.Currency}";
+            {
+                //check - is the vendor's currency greater than or equal to the price of that item
+                player.Inventory[itemIndex].Quantity -= amount;
+                //add item to vendor's inventory
+                vendor.Inventory.Add(player.Inventory[itemIndex]);
+                //minus from vendor's currency the cost of the item
+                vendor.Currency -= newPrice;
+                //add cost of item to player's currency
+                player.Currency += newPrice;
+                PlayerCurrency.Text = $"{player.Currency.ToString("c")}";
+                VendorCurrency.Text = $"{vendor.Currency.ToString("c")}";
+                MessageBox.Show($"You made a profit of {percentToAdd.ToString("c")}.\n You sold a {rarity} {(player.Inventory[itemIndex].Name)}.");
+                // "You made a profit of (newPrice - player.Inventory[itemIndex].Price)
+                // "You sold a (rarity) item!
             }
                 else
                 {
@@ -316,18 +348,38 @@ namespace CraftProjectWPF
                 Information.Text = player.Sell();
             Inventory.Text = vendor.Sell();
         }
+
+        //credit to Ciarren Hollis for displaying image
+        private void DisplaySubmit()
+        {
+            string playerChoice = Input.Text;
+            int recipeIndex = -1;
+            try
+            {
+                //convert to int
+                recipeIndex += Int32.Parse(Input.Text);
+                Inventory.Text = $"{Recipes[recipeIndex].Name}\n{Recipes[recipeIndex].Description}\n";
+                Image.Source = Recipes[recipeIndex].ShowBitmapImage();
+            }
+            catch
+            {
+
+            }
+        }
         private void btn_Craft_Click(object sender, RoutedEventArgs e)
         {
             mode = ApplicationMode.Craft;
             Mode.Text = "Craft Mode";
             Information.Text = GetRecipeListInformation();
+            Inventory.Text = player.GetAllItemsFromInventory();
+            Message.Text = "Enter the number of the recipe you want to craft: ";
         }
         private void btn_Buy_Click(object sender, RoutedEventArgs e)
         {
             mode = ApplicationMode.Buy;
             Mode.Text = "Buy Mode";
-            Information.Text = player.Buy();
-            Inventory.Text = vendor.Buy();
+            Information.Text = vendor.Buy();
+            Inventory.Text = player.Buy();
             Message.Text = "Enter the number of the item you want to buy: ";
         }
 
@@ -335,8 +387,17 @@ namespace CraftProjectWPF
         {
             mode = ApplicationMode.Sell;
             Mode.Text = "Sell Mode";
-            Information.Text = player.Sell();
+            Information.Text = vendor.Sell();
+            Inventory.Text = player.Sell();
             Message.Text = "Enter the number of the item you want to sell: ";
+        }
+
+        private void btn_Display_Click(object sender, RoutedEventArgs e)
+        {
+            mode = ApplicationMode.Display;
+            Mode.Text = "Display Mode";
+            Information.Text = GetRecipeListInformation();
+            Inventory.Text = "Type in the number of the recipe you want to look up: ";
         }
     }
 }
