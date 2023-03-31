@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using System.IO;
 using System.Xml;
 using System.Security.Cryptography.X509Certificates;
+using static CraftProjectWPF.UI.ApplicationUI;
 
 namespace CraftProjectWPF
 {
@@ -27,200 +28,19 @@ namespace CraftProjectWPF
     }
     public partial class MainWindow : Window
     {
-        Player player = new Player();
-        Vendor vendor = new Vendor();
-        List<Recipe> Recipes = new List<Recipe>();
+        Game game;
         ApplicationMode mode = ApplicationMode.Craft;
         public MainWindow()
         {
             InitializeComponent();
+            game = new Game();
         }
 
         private void Grid_Loaded(object sender, RoutedEventArgs e)
         {
-            vendor.Inventory = LoadShopItems("../../../data/shopitems.xml");
-            //GetAllItems... returns string, puts together string and returns it. Here, we are
-            // showing the player the items
-            // 
-            Inventory.Text = player.GetAllItemsFromInventory();
-            Recipes = LoadRecipes("../../../data/recipes.xml");
-            Information.Text = GetRecipeListInformation();
-            Message.Text = "Enter the number of the recipe you want to craft: ";
-            PlayerCurrency.Text = $"{player.Currency.ToString("c")}";
-            VendorCurrency.Text = $"{vendor.Currency.ToString("c")}";
+            game.GameLoaded(Inventory, Information, Message, PlayerCurrency, VendorCurrency);
         }
 
-        //credit to Alex Gartner
-        private string ImagePath(string file) => $"/../images/{file}";
-
-        //credit to PROG 201 class code
-        private List<Recipe> LoadRecipes(string fileName)
-        {
-            List<Recipe> Recipes = new List<Recipe>();
-            XmlDocument doc = new XmlDocument();
-            doc.Load(fileName);
-            XmlNode root = doc.DocumentElement;
-            XmlNodeList recipeList = root.SelectNodes("/recipes/recipe");
-            XmlNodeList ingredientsList;
-
-            foreach (XmlElement recipe in recipeList)
-            {
-                Recipe recipeToAdd = new Recipe();
-                recipeToAdd.Name = recipe.GetAttribute("title");
-                recipeToAdd.Description = recipe.GetAttribute("description");
-                string yieldAmount = recipe.GetAttribute("yieldAmount");
-                if (float.TryParse(yieldAmount, out float amount))
-                { recipeToAdd.YieldAmount = amount; }
-
-                recipeToAdd.YieldType = recipe.GetAttribute("yieldType");
-                string recipevalue = recipe.GetAttribute("value");
-                if (float.TryParse(recipevalue, out float value))
-                { recipeToAdd.Price = value; }
-                recipeToAdd.LocationPath = ImagePath(recipe.GetAttribute("imagePath"));
-
-                ingredientsList = recipe.ChildNodes; //for ingredients
-
-                foreach (XmlElement i in ingredientsList)
-                {
-                    string ingredientName = i.GetAttribute("itemName");
-                    string ingredientAmountString = i.GetAttribute("amount");
-                    float ingredientAmount = 0;
-                    if (float.TryParse(ingredientAmountString, out float e))
-                    { ingredientAmount = e; }
-                    string ingredientAmountType = i.GetAttribute("amountType");
-                    string tempIngredientValue = i.GetAttribute("value");
-                    float ingredientValue = 0;
-                    if (float.TryParse(tempIngredientValue, out float ingValue))
-                    { ingredientValue = ingValue; }
-
-                    recipeToAdd.Ingredients.Add(new Item() { Name = ingredientName, Quantity = ingredientAmount, AmountType = ingredientAmountType, Price = ingredientValue });
-                }
-                Recipes.Add(recipeToAdd);
-            }
-            return Recipes;
-        }
-
-        private List<Item> LoadShopItems(string fileName)
-        {
-            List<Item> ShopItems = new List<Item>();
-            XmlDocument doc = new XmlDocument();
-            doc.Load(fileName);
-            XmlNode root = doc.DocumentElement;
-            XmlNodeList shopItemList = root.SelectNodes("/shopItems/shopItem");
-            //XmlNodeList ingredientsList;
-
-            foreach (XmlElement shopItem in shopItemList)
-            {
-                Item shopItemToAdd = new Item();
-                shopItemToAdd.Name = shopItem.GetAttribute("itemName");
-                string amountCost = shopItem.GetAttribute("amount");
-                if (float.TryParse(amountCost, out float amount))
-                { shopItemToAdd.Quantity = amount; }
-
-                string Cost = shopItem.GetAttribute("cost");
-                if (float.TryParse(Cost, out float cost))
-                { shopItemToAdd.Price = cost; }
-                ShopItems.Add(shopItemToAdd);
-            }
-            return ShopItems;
-        }
-
-        //credit to PROG 201 class code
-        private string GetRecipeListInformation()
-        {
-            string output = "Recipes:\n";
-            int i = 0;
-            foreach (Recipe recipe in Recipes)
-            {
-                output += $"{i + 1} {recipe.Name}\n";
-                foreach (var ingredient in recipe.Ingredients)
-                {
-                    output += "    " + ingredient.Name + Environment.NewLine;
-                }
-                i++;
-            }
-
-            return output;
-        }
-        private string GetShopItemListInformation()
-        {
-            string output = "Shop Items:\n";
-            int i = 0;
-            foreach (Item shopItem in vendor.Inventory)
-            {
-                output += $"{i + 1} {shopItem.Name}, cost: {shopItem.Price}\n";
-
-                i++;
-            }
-
-            return output;
-        }
-
-        //credit to Grace Anders for string type and return strings
-        private string CraftRecipe(Recipe recipe)
-        {
-            if (CheckIngredients(recipe))
-            {
-                //2) if all items and right amount are there, subtract amount needed by recipe from player's inventory
-                foreach (Item item in recipe.Ingredients)
-                {
-                    //item is in inventory
-                    //distill down into if true or if false
-                    player.ChangeItemAmount(item.Name, -item.Quantity);
-
-                    /////////3) MOVE OUT OF FOREACH create a new item of the thing the recipe is supposed to make, then add that to player's inventory (CAN'T HAPPEN IN FOREACH LOOP!!!)
-                    //4) let player know it was successful
-                    //Message.Text = "You have all of the ingredients!";
-                    //returns can break out of loop; don't want one here
-                }
-                if (player.SearchInventoryForItem(recipe.Name))
-                {
-                    player.ChangeItemAmount(recipe.Name, recipe.YieldAmount);
-                    return $"An additional {recipe.Name} has been added to your inventory.";
-                 }
-                else
-                {
-                    player.Inventory.Add(new Item() { Name = recipe.Name, Quantity = recipe.YieldAmount, Description = recipe.Description, Price = recipe.Price });
-                    return $"{recipe.Name} has been added to your inventory.";
-                }
-            }
-            //let player pick recipe (has to happen elsewhere)
-            return "You do not have enough ingredients to make this recipe.";
-
-            //rest can only happen if CanCraft = true
-
-        }
-
-        private bool CheckIngredients(Recipe recipe)
-        {
-            //for each ingredient in the recipe, search player inventory and see if they have the item
-            // check if they have the right amount
-            foreach (Item item in recipe.Ingredients)
-            {
-                if (player.SearchInventoryForItem(item.Name.ToLower()))
-                {
-                    //item is in inventory
-                    //distill down into if true or if false
-                    double amount = player.SearchInventoryForAmount(item.Name.ToLower());
-                    if (amount >= item.Quantity)
-                    {
-                        //they have the right amount, equal or greater
-                        Message.Text = "You have the correct amount of ingredients!";
-                    }
-                    else
-                    {
-                        //they don't have enough
-                        Message.Text = "You do not have enough ingredients.";
-                        return false;
-                    }
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            return true;
-        }
 
         private void btn_Submit_Click(object sender, RoutedEventArgs e)
         {
@@ -228,161 +48,35 @@ namespace CraftProjectWPF
             switch (mode)
             {
                 case ApplicationMode.Craft:
-                    CraftSubmit();
+                    CraftSubmit(Input, Inventory, Message, game.craft.Recipes, game.craft, game.player);
                     break;
                 case ApplicationMode.Buy:
-                    BuySubmit();
+                    BuySubmit(PlayerCurrency, VendorCurrency, Inventory, Information, Input, game.player, game.vendor);
                     break;
                 case ApplicationMode.Sell:
-                    SellSubmit();
+                    SellSubmit(PlayerCurrency, VendorCurrency, Inventory, Information, Input, game.player, game.vendor);
                     break;
                 case ApplicationMode.Display:
-                    DisplaySubmit();
+                    DisplaySubmit(Input, Inventory, Image, game.craft.Recipes);
                     break;
             }
            
         }
-        public void CraftSubmit()
-        {
-            //lets player choose recipe
-            //credit to Karen Spriggs for indexing
-            string playerChoice = Input.Text;
-            int recipeIndex = -1;
-            try
-            {
-                //convert to int, craft recipe, display inventory in Inventory text block
-                recipeIndex += Int32.Parse(Input.Text);
-                Message.Text = CraftRecipe(Recipes[recipeIndex]);
-                Inventory.Text = player.GetAllItemsFromInventory();
-            }
-            catch
-            {
 
-            }
-        }
-
-        public void BuySubmit()
-        {
-            string playerChoice = Input.Text;
-            int itemIndex = -1;
-            int amount = 1;
-            itemIndex += Int32.Parse(Input.Text);
-            if (player.Currency < vendor.Inventory[itemIndex].Price)
-            {
-                //print message saying player doesn't have enough money
-            }
-            if (vendor.SearchInventoryForAmount(vendor.Inventory[itemIndex].Name) >= amount)
-            {
-                vendor.Inventory[itemIndex].Quantity -= amount;
-                player.Inventory.Add(vendor.Inventory[itemIndex]);
-                player.Currency -= vendor.Inventory[itemIndex].Price;
-                vendor.Currency += vendor.Inventory[itemIndex].Price;
-                PlayerCurrency.Text = $"{player.Currency.ToString("c")}";
-                VendorCurrency.Text = $"{vendor.Currency.ToString("c")}";
-            }
-            else
-            {
-
-            }
-            Inventory.Text = player.Buy();
-            Information.Text = vendor.Buy();
-        }
-
-        private void SellSubmit()
-        {
-            string playerChoice = Input.Text;
-            int itemIndex = -1;
-            int amount = 1;
-            itemIndex += Int32.Parse(Input.Text);
-
-            //credit to Sebastian Pedersen for profit margin and pricing system
-            Random random = new Random();
-            int itemRarityIndex = random.Next(1, 11);
-            double profitMargin = 0;
-            string rarity = "";
-
-            if (itemRarityIndex <= 7)
-            {
-                profitMargin = 10;
-                rarity = "common";
-            }
-            else if (itemRarityIndex > 7 && itemRarityIndex < 10)
-            {
-                profitMargin = 15;
-                rarity = "uncommon";
-            }
-            else
-            {
-                profitMargin = 20;
-                rarity = "rare";
-            }
-            double percentToAdd = Math.Round((profitMargin / 100) * player.Inventory[itemIndex].Price, 2);
-            double newPrice = player.Inventory[itemIndex].Price + percentToAdd;
-
-            if (vendor.Currency < newPrice)
-            {
-            //print message saying vendor doesn't have enough currency
-            }
-                //find item in inventory, see if they have more than 0
-                //if true, minus 1 from amount
-            if (player.SearchInventoryForAmount(player.Inventory[itemIndex].Name) >= amount)
-            {
-                //check - is the vendor's currency greater than or equal to the price of that item
-                player.Inventory[itemIndex].Quantity -= amount;
-                //add item to vendor's inventory
-                vendor.Inventory.Add(player.Inventory[itemIndex]);
-                //minus from vendor's currency the cost of the item
-                vendor.Currency -= newPrice;
-                //add cost of item to player's currency
-                player.Currency += newPrice;
-                PlayerCurrency.Text = $"{player.Currency.ToString("c")}";
-                VendorCurrency.Text = $"{vendor.Currency.ToString("c")}";
-                MessageBox.Show($"You made a profit of {percentToAdd.ToString("c")}.\n You sold a {rarity} {(player.Inventory[itemIndex].Name)}.");
-                // "You made a profit of (newPrice - player.Inventory[itemIndex].Price)
-                // "You sold a (rarity) item!
-            }
-                else
-                {
-                //handle if amount of item is 0
-                //print message saying player doesn't have enough items
-                Message.Text = "You do have enough items.";
-                    
-                }
-                Information.Text = player.Sell();
-            Inventory.Text = vendor.Sell();
-        }
-
-        //credit to Ciarren Hollis for displaying image
-        private void DisplaySubmit()
-        {
-            string playerChoice = Input.Text;
-            int recipeIndex = -1;
-            try
-            {
-                //convert to int
-                recipeIndex += Int32.Parse(Input.Text);
-                Inventory.Text = $"{Recipes[recipeIndex].Name}\n{Recipes[recipeIndex].Description}\n";
-                Image.Source = Recipes[recipeIndex].ShowBitmapImage();
-            }
-            catch
-            {
-
-            }
-        }
         private void btn_Craft_Click(object sender, RoutedEventArgs e)
         {
             mode = ApplicationMode.Craft;
             Mode.Text = "Craft Mode";
-            Information.Text = GetRecipeListInformation();
-            Inventory.Text = player.GetAllItemsFromInventory();
+            Information.Text = GetRecipeListInformation(game.craft.Recipes);
+            Inventory.Text = game.player.GetAllItemsFromInventory();
             Message.Text = "Enter the number of the recipe you want to craft: ";
         }
         private void btn_Buy_Click(object sender, RoutedEventArgs e)
         {
             mode = ApplicationMode.Buy;
             Mode.Text = "Buy Mode";
-            Information.Text = vendor.Buy();
-            Inventory.Text = player.Buy();
+            Information.Text = game.vendor.Buy();
+            Inventory.Text = game.player.Buy();
             Message.Text = "Enter the number of the item you want to buy: ";
         }
 
@@ -390,8 +84,8 @@ namespace CraftProjectWPF
         {
             mode = ApplicationMode.Sell;
             Mode.Text = "Sell Mode";
-            Information.Text = vendor.Sell();
-            Inventory.Text = player.Sell();
+            Information.Text = game.vendor.Sell();
+            Inventory.Text = game.player.Sell();
             Message.Text = "Enter the number of the item you want to sell: ";
         }
 
@@ -399,7 +93,7 @@ namespace CraftProjectWPF
         {
             mode = ApplicationMode.Display;
             Mode.Text = "Display Mode";
-            Information.Text = GetRecipeListInformation();
+            Information.Text = GetRecipeListInformation(game.craft.Recipes);
             Inventory.Text = "Type in the number of the recipe you want to look up: ";
         }
     }
