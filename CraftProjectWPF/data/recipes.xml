@@ -5,31 +5,31 @@
 		<ingredient itemName = "Egg" amount = "2" amountType = "(cracked)"/>
 		<ingredient itemName = "Cacao powder" amount = "2" amountType = "tbsp"/>
 	</recipe>
-	<recipe title = "Powdered Sugar Icing" description = "Makes icing" yieldAmount = "1" yieldType = "bowl" value = "4.00">
+	<recipe title = "Powdered Sugar Icing" description = "Makes icing" yieldAmount = "1" yieldType = "bowl" value = "4.00" imagePath = "powdered-sugar-icing.jpg">
 		<ingredient itemName = "Powdered sugar" amount = "1" amountType = "cup(s)"/>
 		<ingredient itemName = "Vanilla extract" amount = "0.5" amountType = "tbsp"/>
 		<ingredient itemName = "Milk" amount = "2" amountType = "cup(s)"/>
 	</recipe>
-	<recipe title ="Appplesauce Donuts" description ="Makes cakey donuts" yieldAmount = "12" yieldType = "muffin tins" value ="12.00">
+	<recipe title ="Appplesauce Donuts" description ="Makes cakey donuts" yieldAmount = "12" yieldType = "muffin tins" value ="12.00" imagePath = "applesauce-donuts.jpg">
 		<ingredient itemName = "Water" amount ="0.5" amountType ="cup(s)"/>
 		<ingredient itemName ="Applesauce" amount ="2" amountType ="cup(s)"/>
 		<ingredient itemName = "Egg" amount ="2" amountType="(cracked)"/>
 		<ingredient itemName = "Flour" amount = "0.5" amountType="cup(s)"/>
 	</recipe>
-	<recipe title = "Applesauce" description = "Makes basic applesauce" yieldAmount = "12" yieldType = "small cupfuls" value = "6.00">
+	<recipe title = "Applesauce" description = "Makes basic applesauce" yieldAmount = "12" yieldType = "small cupfuls" value = "6.00" imagePath = "applesauce.jpg">
 		<ingredient itemName = "Apples" amount = "4" amountType = "pounds"/>
 		<ingredient itemName = "Sugar" amount = "0.25" amountType = "cup(s)"/>
 		<ingredient itemName = "Salt" amount = "1" amountType = "tsp"/>
 		<ingredient itemName = "Lemon juice" amount = "1" amountType = "tbsp"/>
 		<ingredient itemName = "Ground cinnamon" amount = "0.25" amountType = "tsp"/>
 	</recipe>
-	<recipe title = "Crusty Bread" description = "Makes a loaf of white bread" yieldAmount = "1" yieldType = "loaf" value = "5.00">
+	<recipe title = "Crusty Bread" description = "Makes a loaf of white bread" yieldAmount = "1" yieldType = "loaf" value = "5.00" imagePath = "crusty-bread.jpg">
 		<ingredient itemName = "Flour" amount = "3" amountType = "cup(s)"/>
 		<ingredient itemName = "Salt" amount = "1" amountType = "tsp"/>
 		<ingredient itemName = "Yeast" amount = "0.5" amountType = "tsp"/>
 		<ingredient itemName = "Water" amount = "1.5" amountType = "cup(s)"/>
 	</recipe>
-	<recipe title = "Banana Bread" description = "Makes a chocolatey banana bread" yieldAmount = "2" yieldType = "loaf" value = "10.00">
+	<recipe title = "Banana Bread" description = "Makes banana bread" yieldAmount = "2" yieldType = "loaf" value = "14.00" imagePath = "banana-bread.jpg">
 		<ingredient itemName = "Flour" amount = "1.75" amountType = "cup(s)"/>
 		<ingredient itemName = "Baking soda" amount = "1" amountType = "tsp"/>
 		<ingredient itemName = "Baking powder" amount = "1" amountType = "tsp"/>
@@ -40,5 +40,31 @@
 		<ingredient itemName = "Banana" amount = "1" amountType = "cup(s)"/>
 		<ingredient itemName = "Lemon juice" amount = "2" amountType = "tbsp"/>
 		<ingredient itemName = "Vanilla extract" amount = "1.5" amountType = "tsp"/>
+	</recipe>
+	<recipe title = "Bagels" description = "Makes plain bagels" yieldAmount = "12" yieldType = "bagels" value = "6.00" imagePath = "bagels.jpg">
+		<ingredient itemName = "Yeast" amount = "1" amountType = "tbsp"/>
+		<ingredient itemName = "Flour" amount = "4" amountType = "cup(s)"/>
+		<ingredient itemName = "Salt" amount = "2" amountType = "tsp"/>
+		<ingredient itemName = "Dark brown sugar" amount = "1" amountType = "tbsp"/>
+		<ingredient itemName = "Water" amount = "1.3" amountType = "cup(s)"/>
+	</recipe>
+	<recipe title = "Peanut Butter Cookies" description = "Makes chewy peanut butter cookies" yieldAmount = "24" value = "7.00" imagePath = "peanut-butter-cookies.jpg">
+		<ingredient itemName = "Peanut butter" amount = "1" amountType = "cup(s)"/>
+		<ingredient itemName = "Sugar" amount = "1" amountType = "cup(s)"/>
+		<ingredient itemName = "Egg" amount = "1" amountType = "(cracked)"/>
+	</recipe>
+	<recipe title = "Peach Cobbler" description = "Grandma's version of peach cobbler" yieldAmount = "1" value = "6.00" imagePath = "peach-cobbler.jpg">
+		<ingredient itemName = "Canned peaches" amount = "1" amountType = "can(s)"/>
+		<ingredient itemName = "Flour" amount = "1" amountType = "cup(s)"/>
+		<ingredient itemName = "Sugar" amount = "1" amountType = "cup(s)"/>
+		<ingredient itemName = "Egg" amount = "1" amountType = "(cracked)"/>
+		<ingredient itemName = "Unsalted butter" amount = "0.5" amountType = "cup(s)"/>
+	</recipe>
+	<recipe title = "Honey Lavender Cookies" description = "Makes sweet, flowery cookies" yieldAmount = "24" value = "8.00" imagePath = "honey-lavender-cookies.jpg">
+		<ingredient itemName = "Unsalted butter" amount = "0.5" amountType = "cup(s)"/>
+		<ingredient itemName = "Honey" amount = "0.5" amountType = "cup(s)"/>
+		<ingredient itemName = "Egg" amount = "1" amountType = "(cracked)"/>
+		<ingredient itemName = "Lavender flowers" amount = "1" amountType = "tbsp"/>
+		<ingredient itemName = "Flour" amount = "2" amountType = "cup(s)"/>
 	</recipe>
 </recipes>
