@@ -22,6 +22,9 @@ namespace CraftProjectWPF
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
+    /// 
+
+    //add comments for crediting tutors
     public enum ApplicationMode
     {
         Craft, Buy, Sell, Display
@@ -94,7 +97,8 @@ namespace CraftProjectWPF
             mode = ApplicationMode.Display;
             Mode.Text = "Display Mode";
             Information.Text = GetRecipeListInformation(game.craft.Recipes);
-            Inventory.Text = "Type in the number of the recipe you want to look up: ";
+            Message.Text = "Type in the number of the recipe you want to look up: ";
+            Inventory.Text = "";
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CraftProjectWPF.UI;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +12,8 @@ namespace CraftProjectWPF
         //public - convention to capitalize
         public double Currency = 100.00;
         public List<Item> Inventory = new List<Item>();
+
+        AmountConversion conversion = new AmountConversion();
 
         public bool SearchInventoryForItem(string name)
         {
@@ -60,9 +63,16 @@ namespace CraftProjectWPF
             //    output += item.Name + Environment.NewLine;
             //}
             //return output; 
+
+            //conversion
             for (int i = 0; i < Inventory.Count; i++)
             {
-                output += $"{Inventory[i].Name} \n";
+                output += $"{Inventory[i].Name} {Inventory[i].Quantity} {Inventory[i].AmountType}";
+                
+                if (Inventory[i].AmountType == "cup(s)")
+                {
+                    output += $" ({conversion.CupToTsp(Inventory[i].Quantity)} tsp) \n";
+                }
             }
             return output;
         }

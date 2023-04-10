@@ -15,7 +15,7 @@ namespace CraftProjectWPF
         {
             Inventory = new List<Item>()
         {
-            new Item(){Name = "Water", Description = "Clean water", Quantity = 0.50, Price = 1.00},
+            new Item(){Name = "Water", Description = "Clean water", Quantity = 2, Price = 1.00},
             new Item(){Name = "Milk", Description = "Dairy product", Quantity = 2, Price = 3.00},
             new Item(){Name = "Vanilla extract", Description = "Concentrated vanilla", Quantity = 1, Price = 4.00},
             new Item(){Name = "Powdered sugar", Description = "A fine, fluffy form of sugar", Quantity = 2, Price = 5.00}

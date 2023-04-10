@@ -16,7 +16,7 @@
             <ColumnDefinition Width="381*"/>
         </Grid.ColumnDefinitions>
         <ScrollViewer Grid.Column="1" Margin="10,31,436,63" Grid.Row="1" Background="#FFF4D19A">
-            <TextBlock x:Name="Information" TextWrapping="Wrap" Text="TextBlock" Height="689" Width="277"/>
+            <TextBlock x:Name="Information" TextWrapping="Wrap" Text="TextBlock" Height="1095" Width="277"/>
         </ScrollViewer>
 
         <TextBox x:Name="Input" HorizontalAlignment="Center" Margin="0,309,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.Column="1" Grid.Row="1"/>
