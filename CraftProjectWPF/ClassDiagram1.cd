@@ -1,0 +1,131 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
+  <Class Name="CraftProjectWPF.Recipe_Classes.Cake">
+    <Position X="1.25" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Recipe Classes\Cake.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CraftProjectWPF.UI.AmountConversion">
+    <Position X="13.25" Y="0.5" Width="3.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAgAAAQAAAAEAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>UI\AmountConversion.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CraftProjectWPF.UI.ApplicationUI">
+    <Position X="24" Y="0.75" Width="10.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIAAAEEAACAAAACAAAAEAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>UI\ApplicationUI.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CraftProjectWPF.UI.ContentUtility">
+    <Position X="24" Y="5.75" Width="4.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAIAAAAAAACAAAAAAAAIAAAA=</HashCode>
+      <FileName>UI\ContentUtility.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CraftProjectWPF.App">
+    <Position X="18.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>App.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CraftProjectWPF.Cookbook">
+    <Position X="13.25" Y="2.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Cookbook.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CraftProjectWPF.Craft">
+    <Position X="17.25" Y="1.75" Width="4" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAIAAAAAAAAAAAAEAAAAAAAAA=</HashCode>
+      <FileName>Craft.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CraftProjectWPF.CraftedItem">
+    <Position X="4.25" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CraftedItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CraftProjectWPF.Game">
+    <Position X="24" Y="3.25" Width="9" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAAAAAAAAAAAAAAAAAAAAEAAAAABAIAAAAAAAAA=</HashCode>
+      <FileName>Game.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CraftProjectWPF.Item">
+    <Position X="3.5" Y="0.5" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAgAAAAIAAAAAQAAAAAAAAAAAAAgAAAAAA=</HashCode>
+      <FileName>Item.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CraftProjectWPF.MainWindow" BaseTypeListCollapsed="true">
+    <Position X="24" Y="7.75" Width="4.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAACAAAAAAAAAAAAAAAAMACAAAAKACAA=</HashCode>
+      <FileName>MainWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="CraftProjectWPF.Material">
+    <Position X="7" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Material.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CraftProjectWPF.Person">
+    <Position X="4" Y="4.5" Width="4" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAABAAgAQQAAAAAAICAAAAIAAAAAAAgAAAAA=</HashCode>
+      <FileName>Person.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CraftProjectWPF.Player">
+    <Position X="7" Y="8" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAACAAAA=</HashCode>
+      <FileName>Player.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CraftProjectWPF.Program">
+    <Position X="14" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CraftProjectWPF.Recipe">
+    <Position X="15.75" Y="4" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAMAAQAgAAAAAAAAACQAAAAAQAAEAEAgAAABAAA=</HashCode>
+      <FileName>Recipe.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CraftProjectWPF.Vendor">
+    <Position X="3" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Vendor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="CraftProjectWPF.ApplicationMode">
+    <Position X="14" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAAAQAAAAQAAAAAAgAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MainWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

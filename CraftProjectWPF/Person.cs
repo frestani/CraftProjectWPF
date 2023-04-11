@@ -19,7 +19,7 @@ namespace CraftProjectWPF
         {
             foreach (var item in Inventory)
             {
-                // name.ToLower() is passed through th method
+                // name.ToLower() is passed through the method
                 if (item.Name.ToLower() == name.ToLower())
                 {
                     return true;
